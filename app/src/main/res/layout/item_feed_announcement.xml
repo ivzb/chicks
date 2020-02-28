@@ -17,10 +17,10 @@
         style="@style/Widget.Chicks.Feed.Card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_small"
-        android:layout_marginEnd="@dimen/margin_normal"
         android:layout_marginStart="@dimen/margin_normal"
-        android:layout_marginTop="@dimen/margin_small" >
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_marginBottom="@dimen/margin_small">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -34,12 +34,12 @@
                 android:contentDescription="@null"
                 android:scaleType="centerCrop"
                 android:visibility="gone"
+                app:goneUnless="@{announcement.hasImage}"
+                app:imageUrl="@{announcement.imageUrl}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="@dimen/feed_image_width_percent"
-                app:goneUnless="@{announcement.hasImage}"
-                app:imageUrl="@{announcement.imageUrl}"
                 app:placeholder="@{@drawable/generic_placeholder}"
                 tools:src="@drawable/event_header_sessions"
                 tools:visibility="visible" />

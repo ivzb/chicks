@@ -13,9 +13,8 @@ class DefaultAnnouncementDataSource @Inject constructor() : AnnouncementDataSour
     override fun getAnnouncements() = listOf(
         Announcement(
             id = 1,
-            title = "Save your first link",
-            imageUrl = null,
-            message = "Paste link from clipboard or share to Chicks app."
+            title = "Refresh for chicks",
+            message = "Pull to refresh for chicks."
         )
     )
 }
