@@ -36,8 +36,8 @@
         tools:layout="@layout/fragment_details">
 
         <argument
-            android:name="link_id"
-            app:argType="integer" />
+            android:name="link"
+            app:argType="com.ivzb.chicks.model.Link" />
     </fragment>
 
     <fragment

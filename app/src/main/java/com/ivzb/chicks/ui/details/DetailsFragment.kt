@@ -103,16 +103,9 @@ class DetailsFragment : MainNavigationFragment() {
             detailsAdapter.link = listOf(it)
         })
 
-        setUpSnackbar(detailsViewModel.snackBarMessage, binding.snackbar, snackbarMessageManager)
-
-        detailsViewModel.errorMessage.observe(this, EventObserver { errorMsg ->
-            // TODO: Change once there's a way to show errors to the user
-            Toast.makeText(this.context, errorMsg, Toast.LENGTH_LONG).show()
-        })
-
         requireArguments().apply {
-            val linkId = DetailsFragmentArgs.fromBundle(this).linkId
-            detailsViewModel.observeLink(linkId)
+            val link = DetailsFragmentArgs.fromBundle(this).link
+            detailsViewModel.setLink(link)
         }
 
         return binding.root

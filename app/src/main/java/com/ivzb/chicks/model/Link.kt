@@ -9,9 +9,8 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class Link(
-    val id: Int = 0,
     val url: String,
-    val sitename: String? = null,
     val title: String? = null,
-    val imageUrl: String? = null
+    val imageUrl: String? = null,
+    val timestamp: Long? = 0
 ) : Parcelable

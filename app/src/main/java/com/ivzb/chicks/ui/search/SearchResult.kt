@@ -1,11 +1,10 @@
 package com.ivzb.chicks.ui.search
 
 data class SearchResult(
-    val id: Int,
+    val url: String,
     val title: String?,
-    val subtitle: String,
     val imageUrl: String?,
-    val sitename: String?,
+    val timestamp: Long?,
     val type: SearchResultType
 )
 

@@ -30,7 +30,7 @@ class LinksViewBinder(
     override fun getFeedItemType(): Int = R.layout.item_feed_link
 
     override fun areItemsTheSame(oldItem: Link, newItem: Link): Boolean =
-        oldItem.id == newItem.id
+        oldItem.url == newItem.url
 
     override fun areContentsTheSame(oldItem: Link, newItem: Link) =
         oldItem == newItem

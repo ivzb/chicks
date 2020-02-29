@@ -104,7 +104,7 @@ class FeedFragment : MainNavigationFragment() {
         })
 
         model.performLinkClickEvent.observe(viewLifecycleOwner, EventObserver { link ->
-            openDetails(link.id)
+            openDetails(link)
         })
 
         model.performLinkLongClickEvent.observe(viewLifecycleOwner, EventObserver { link ->
@@ -176,9 +176,9 @@ class FeedFragment : MainNavigationFragment() {
         findNavController().navigate(toSearch())
     }
 
-    private fun openDetails(id: Int) {
+    private fun openDetails(link: Link) {
         analyticsHelper.logUiEvent(AnalyticsActions.HOME_TO_DETAILS)
-        findNavController().navigate(toDetails(id))
+        findNavController().navigate(toDetails(link))
     }
 
     companion object {

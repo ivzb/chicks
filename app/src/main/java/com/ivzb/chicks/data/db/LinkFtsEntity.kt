@@ -15,30 +15,17 @@ import androidx.room.PrimaryKey
 @Fts4
 data class LinkFtsEntity(
 
-    /**
-     * An FTS entity table always has a column named rowid that is the equivalent of an
-     * INTEGER PRIMARY KEY index. Therefore, an FTS entity can only have a single field
-     * annotated with PrimaryKey, it must be named rowid and must be of INTEGER affinity.
-     *
-     * The field can be optionally omitted in the class (as is done here),
-     * but can still be used in queries.
-     */
-
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "rowid")
-    val id: Int = 0,
-
     @ColumnInfo(name = "url")
     val url: String,
-
-    @ColumnInfo(name = "sitename")
-    val sitename: String? = null,
 
     @ColumnInfo(name = "title")
     val title: String? = null,
 
     @ColumnInfo(name = "imageUrl")
-    val imageUrl: String? = null
+    val imageUrl: String? = null,
+
+    @ColumnInfo(name = "timestamp")
+    val timestamp: Long? = 0
 ) {
 
     override fun equals(other: Any?): Boolean {
@@ -47,21 +34,19 @@ data class LinkFtsEntity(
 
         other as LinkFtsEntity
 
-        if (id != other.id) return false
         if (url != other.url) return false
-        if (sitename != other.sitename) return false
         if (title != other.title) return false
         if (imageUrl != other.imageUrl) return false
+        if (timestamp != other.timestamp) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        var result = id
-        result = 31 * result + url.hashCode()
-        result = 31 * result + (sitename?.hashCode() ?: 0)
+        var result = url.hashCode()
         result = 31 * result + (title?.hashCode() ?: 0)
         result = 31 * result + (imageUrl?.hashCode() ?: 0)
+        result = 31 * result + (timestamp?.hashCode() ?: 0)
         return result
     }
 }

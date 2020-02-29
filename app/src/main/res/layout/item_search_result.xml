@@ -69,7 +69,7 @@
                 android:autoLink="web"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="@{searchResult.subtitle}"
+                android:text="@{searchResult.url}"
                 android:textAlignment="viewStart"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

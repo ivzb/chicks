@@ -6,19 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ivzb.chicks.domain.Event
 import com.ivzb.chicks.domain.Result
-import com.ivzb.chicks.domain.search.ObserveSearchUseCase
+import com.ivzb.chicks.domain.search.LoadSearchUseCase
 import com.ivzb.chicks.domain.search.Searchable
 import com.ivzb.chicks.domain.successOr
 import com.ivzb.chicks.model.Link
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(
-    private val observeSearchUseCase: ObserveSearchUseCase
+    private val loadSearchUseCase: LoadSearchUseCase
 ) : ViewModel(), SearchResultActionHandler {
 
-    private val loadSearchResults by lazy(LazyThreadSafetyMode.NONE) {
-        observeSearchUseCase.observe()
-    }
+    private val loadSearchResult = MutableLiveData<Result<List<Searchable>>>()
 
     private val _searchResults = MediatorLiveData<List<SearchResult>>()
     val searchResults: LiveData<List<SearchResult>> = _searchResults
@@ -31,7 +29,7 @@ class SearchViewModel @Inject constructor(
     val performLinkLongClickEvent: MutableLiveData<Event<Link>> = MutableLiveData()
 
     init {
-        _searchResults.addSource(loadSearchResults) {
+        _searchResults.addSource(loadSearchResult) {
             val result = (it as? Result.Success)?.data ?: emptyList()
             _searchResults.value = result.map { searched ->
                 when (searched) {
@@ -39,11 +37,10 @@ class SearchViewModel @Inject constructor(
                         val link = searched.link
 
                         SearchResult(
-                            id = link.id,
+                            url = link.url,
                             title = link.title,
-                            subtitle= link.url,
                             imageUrl = link.imageUrl,
-                            sitename = link.sitename,
+                            timestamp = link.timestamp,
                             type = SearchResultType.LINK
                         )
                     }
@@ -51,7 +48,7 @@ class SearchViewModel @Inject constructor(
             }
         }
 
-        _isEmpty.addSource(loadSearchResults) {
+        _isEmpty.addSource(loadSearchResult) {
             _isEmpty.value = it.successOr(null).isNullOrEmpty()
         }
 
@@ -61,12 +58,16 @@ class SearchViewModel @Inject constructor(
     override fun clickSearchResult(searchResult: SearchResult) {
         when (searchResult.type) {
             SearchResultType.LINK -> {
-                performLinkClickEvent.postValue(Event(Link(
-                    id = searchResult.id,
-                    title = searchResult.title,
-                    url = searchResult.subtitle,
-                    imageUrl = searchResult.imageUrl
-                )))
+                performLinkClickEvent.postValue(
+                    Event(
+                        Link(
+                            url = searchResult.url,
+                            title = searchResult.title,
+                            imageUrl = searchResult.imageUrl,
+                            timestamp = searchResult.timestamp
+                        )
+                    )
+                )
             }
         }
     }
@@ -74,17 +75,21 @@ class SearchViewModel @Inject constructor(
     override fun longClickSearchResult(searchResult: SearchResult) {
         when (searchResult.type) {
             SearchResultType.LINK -> {
-                performLinkLongClickEvent.postValue(Event(Link(
-                    id = searchResult.id,
-                    title = searchResult.title,
-                    url = searchResult.subtitle,
-                    imageUrl = searchResult.imageUrl
-                )))
+                performLinkLongClickEvent.postValue(
+                    Event(
+                        Link(
+                            url = searchResult.url,
+                            title = searchResult.title,
+                            imageUrl = searchResult.imageUrl,
+                            timestamp = searchResult.timestamp
+                        )
+                    )
+                )
             }
         }
     }
 
     fun onSearchQueryChanged(query: String) {
-        observeSearchUseCase.execute(query)
+        loadSearchUseCase(query, loadSearchResult)
     }
 }
