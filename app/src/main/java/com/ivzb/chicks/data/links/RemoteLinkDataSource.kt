@@ -1,47 +1,62 @@
 package com.ivzb.chicks.data.links
 
-import com.google.android.gms.tasks.Tasks
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
-import com.ivzb.chicks.model.Link
-import java.util.concurrent.TimeUnit
+import android.content.Context
+import com.google.gson.Gson
+import com.ivzb.chicks.util.NetworkUtils
+import java.io.IOException
 import javax.inject.Inject
 
 /**
- * Feed data source backed by items in a FireStore collection.
+ * Downloads and parses link data.
  */
 class RemoteLinkDataSource @Inject constructor(
-    val firestore: FirebaseFirestore
+    val context: Context,
+    val gson: Gson,
+    private val networkUtils: NetworkUtils
 ) : LinkDataSource {
 
-    override fun getLinks(): List<Link> {
-        val task = firestore
-            .collection(COLLECTION_FEED)
-            .get()
+    override fun getRemoteData(): LinkData? {
+        if (!networkUtils.hasNetworkConnection()) {
+            return null
+        }
 
-        val snapshot = Tasks.await(task, 20, TimeUnit.SECONDS)
+        val responseSource = try {
+            LinkDataDownloader(context, "1").fetch()
+        } catch (e: IOException) {
+            throw e
+        }
 
-        return snapshot.documents.map { parseSnapshot(it) }
-            .sortedWith(compareByDescending { it.timestamp })
+        val body = responseSource.body()?.byteStream() ?: return null
+
+        val parsedData = try {
+            gson.fromJson(body.reader(), LinkData::class.java)
+        } catch (e: RuntimeException) {
+            null
+        }
+
+        responseSource.close()
+        return parsedData
     }
 
-    private fun parseSnapshot(snapshot: DocumentSnapshot) = Link(
-        url = snapshot[URL] as? String ?: "",
-        title = snapshot[TITLE] as? String ?: "",
-        imageUrl = snapshot[IMAGE_URL] as? String,
-        timestamp = snapshot[TIMESTAMP] as? Long ?: 0
-    )
+    /**
+     * Returns the cached link data or null if there's no cache.
+     */
+    override fun getOfflineData(): LinkData? {
+        val responseSource = try {
+            LinkDataDownloader(context, "1").fetchCached()
+        } catch (e: IOException) {
+            return null
+        }
 
-    companion object {
-        /**
-         * Firestore constants.
-         */
-        private const val COLLECTION_FEED = "feed"
-        private const val COLLECTION_TOP = "top"
+        val body = responseSource?.body()?.byteStream() ?: return null
 
-        private const val URL = "url"
-        private const val TITLE = "title"
-        private const val IMAGE_URL = "imageUrl"
-        private const val TIMESTAMP = "timeStamp"
+        val parsedData = try {
+            gson.fromJson(body.reader(), LinkData::class.java)
+        } catch (e: RuntimeException) {
+            null
+        }
+
+        responseSource.close()
+        return parsedData
     }
 }

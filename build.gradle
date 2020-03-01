@@ -36,6 +36,7 @@ buildscript {
         firebaseFirestoreVersion = '21.4.1'
         firebaseMessagingVersion = '20.1.1'
         crashlyticsVersion = "17.0.0-beta01"
+        okhttpVersion = "3.10.0"
     }
 
     repositories {

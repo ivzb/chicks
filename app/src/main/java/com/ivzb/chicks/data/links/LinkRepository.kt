@@ -30,13 +30,13 @@ open class LinkRepository @Inject constructor(
 
     fun refreshCacheWithRemoteLinkData() {
 
-        populateLinks(remoteDataSource.getLinks())
+        populateLinks(remoteDataSource.getRemoteData()!!.links)
 
         _dataLastUpdatedObservable.postValue(System.currentTimeMillis())
         latestUpdateSource = UpdateSource.NETWORK
     }
 
-    fun getLinks(): List<Link> = remoteDataSource.getLinks()
+    fun getLinks(): List<Link> = remoteDataSource.getRemoteData()!!.links
 
 //    fun getOfflineLinkData(): List<Link> {
 //        synchronized(loadConfDataLock) {

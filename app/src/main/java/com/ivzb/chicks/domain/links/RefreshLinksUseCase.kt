@@ -5,7 +5,7 @@ import com.ivzb.chicks.domain.UseCase
 import javax.inject.Inject
 
 /**
- * Forces a refresh in the conference data repository.
+ * Forces a refresh in the link data repository.
  */
 open class RefreshLinksUseCase @Inject constructor(
     private val repository: LinkRepository

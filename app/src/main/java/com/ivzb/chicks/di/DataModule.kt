@@ -3,10 +3,12 @@ package com.ivzb.chicks.di
 import android.content.Context
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.google.gson.Gson
 import com.ivzb.chicks.data.announcements.AnnouncementDataSource
 import com.ivzb.chicks.data.announcements.DefaultAnnouncementDataSource
 import com.ivzb.chicks.data.db.AppDatabase
 import com.ivzb.chicks.data.links.*
+import com.ivzb.chicks.util.NetworkUtils
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -38,8 +40,12 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun provideRemoteLinkDataSource(firestore: FirebaseFirestore): LinkDataSource {
-        return RemoteLinkDataSource(firestore)
+    fun provideRemoteDataSource(
+        context: Context,
+        gson: Gson,
+        networkUtils: NetworkUtils
+    ): LinkDataSource {
+        return RemoteLinkDataSource(context, gson, networkUtils)
     }
 
     @Singleton
@@ -55,4 +61,8 @@ class DataModule {
         localLinkDataSource: LocalLinkDataSource,
         appDatabase: AppDatabase
     ): LinkRepository = LinkRepository(remoteLinkDataSource, localLinkDataSource, appDatabase)
+
+    @Singleton
+    @Provides
+    fun provideGson() = Gson()
 }

@@ -22,12 +22,14 @@ android {
 
     buildTypes {
         debug {
-
+            buildConfigField "String", "LINK_DATA_URL", "\"http://192.168.1.104:8080/feed\""
         }
 
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "LINK_DATA_URL", "\"http://192.168.1.104:8080/feed\""
         }
     }
 
@@ -92,4 +94,8 @@ dependencies {
 
     // Utils
     implementation "org.jsoup:jsoup:$rootProject.jsoupVersion"
+
+    // OkHttp
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
 }

@@ -37,9 +37,17 @@ open class LocalLinkDataSource @Inject constructor(
     //    override fun get(id: Int): Link {
 //        return mapLink(appDatabase.linksFtsDao().get(id))
 //    }
+
+    override fun getRemoteData(): LinkData? {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getOfflineData(): LinkData? {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 //
-    override fun getLinks() =
-        appDatabase.linksFtsDao().getAll().toSet().map { parseFtsEntity(it) }
+//    override fun getLinks() =
+//        appDatabase.linksFtsDao().getAll().toSet().map { parseFtsEntity(it) }
 
     //
 //    override fun observe(id: Int): LiveData<Link> {

@@ -7,7 +7,7 @@ import com.ivzb.chicks.domain.succeeded
 import javax.inject.Inject
 
 /**
- * A Job that refreshes the conference data in the repository (if the app is active) and
+ * A Job that refreshes the link data in the repository (if the app is active) and
  * in the cache (if the app is not active).
  */
 class LinksDataService : DaggerJobService() {

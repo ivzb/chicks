@@ -4,9 +4,9 @@ import com.ivzb.chicks.model.Link
 
 interface LinkDataSource {
 
-    fun getLinks(): List<Link>
-//    fun getRemoteData(): LinkData?
-//    fun getOfflineData(): LinkData?
+//    fun getLinks(): List<Link>
+    fun getRemoteData(): LinkData?
+    fun getOfflineData(): LinkData?
 }
 
 enum class UpdateSource {
