@@ -2,14 +2,13 @@ package com.ivzb.chicks.domain.links
 
 import com.ivzb.chicks.data.links.LinkRepository
 import com.ivzb.chicks.domain.UseCase
-import com.ivzb.chicks.model.Link
 import javax.inject.Inject
 
-open class LoadLinksUseCase @Inject constructor(
+open class FetchLinksUseCase @Inject constructor(
     private val repository: LinkRepository
-) : UseCase<Unit, List<Link>>() {
+) : UseCase<Int, Unit>() {
 
-    override fun execute(parameters: Unit) =
-        repository.getLinks()
+    override fun execute(timestamp: Int) {
+        repository.fetchLinks(timestamp)
+    }
 }
-

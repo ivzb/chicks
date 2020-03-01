@@ -89,7 +89,6 @@ dependencies {
     // Firebase
     implementation "com.google.firebase:firebase-analytics:$rootProject.firebaseAnalyticsVersion"
     implementation "com.google.firebase:firebase-firestore:$rootProject.firebaseFirestoreVersion"
-    implementation "com.google.firebase:firebase-messaging:$rootProject.firebaseMessagingVersion"
     releaseImplementation "com.google.firebase:firebase-crashlytics:$rootProject.crashlyticsVersion"
 
     // Utils

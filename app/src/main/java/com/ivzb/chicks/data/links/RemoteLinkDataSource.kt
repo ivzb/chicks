@@ -13,9 +13,9 @@ class RemoteLinkDataSource @Inject constructor(
     val context: Context,
     val gson: Gson,
     private val networkUtils: NetworkUtils
-) : LinkDataSource {
+): LinkDataSource {
 
-    override fun getRemoteData(): LinkData? {
+    override fun fetchLinks(timestamp: Int): LinkData? {
         if (!networkUtils.hasNetworkConnection()) {
             return null
         }
@@ -27,28 +27,6 @@ class RemoteLinkDataSource @Inject constructor(
         }
 
         val body = responseSource.body()?.byteStream() ?: return null
-
-        val parsedData = try {
-            gson.fromJson(body.reader(), LinkData::class.java)
-        } catch (e: RuntimeException) {
-            null
-        }
-
-        responseSource.close()
-        return parsedData
-    }
-
-    /**
-     * Returns the cached link data or null if there's no cache.
-     */
-    override fun getOfflineData(): LinkData? {
-        val responseSource = try {
-            LinkDataDownloader(context, "1").fetchCached()
-        } catch (e: IOException) {
-            return null
-        }
-
-        val body = responseSource?.body()?.byteStream() ?: return null
 
         val parsedData = try {
             gson.fromJson(body.reader(), LinkData::class.java)

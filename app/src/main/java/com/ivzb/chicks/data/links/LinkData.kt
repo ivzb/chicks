@@ -7,5 +7,5 @@ import com.ivzb.chicks.model.Link
  */
 data class LinkData(
     val links: List<Link>,
-    val version: Int
+    val timestamp: Int
 )

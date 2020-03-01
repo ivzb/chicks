@@ -37,18 +37,5 @@
         <activity
             android:name="com.ivzb.chicks.ui.onboarding.OnboardingActivity"
             android:theme="@style/AppTheme.Onboarding" />
-
-        <service
-            android:name=".data.job.LinksDataService"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <service
-            android:name=".fcm.ChicksFirebaseMessagingService"
-            android:exported="false">
-
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
     </application>
 </manifest>

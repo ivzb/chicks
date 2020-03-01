@@ -9,7 +9,8 @@ import com.ivzb.chicks.domain.Event
 import com.ivzb.chicks.domain.Result
 import com.ivzb.chicks.domain.Result.Loading
 import com.ivzb.chicks.domain.announcements.LoadAnnouncementsUseCase
-import com.ivzb.chicks.domain.links.LoadLinksUseCase
+import com.ivzb.chicks.domain.links.FetchLinksUseCase
+import com.ivzb.chicks.domain.links.ObserveLinksUseCase
 import com.ivzb.chicks.domain.successOr
 import com.ivzb.chicks.model.Announcement
 import com.ivzb.chicks.model.Link
@@ -26,7 +27,8 @@ import javax.inject.Inject
  */
 class FeedViewModel @Inject constructor(
     loadAnnouncementsUseCase: LoadAnnouncementsUseCase,
-    loadLinksUseCase: LoadLinksUseCase
+    private val observeLinksUseCase: ObserveLinksUseCase,
+    private val fetchLinksUseCase: FetchLinksUseCase
 ) : ViewModel(), EventActions {
 
     val feed: LiveData<List<Any>>
@@ -43,7 +45,9 @@ class FeedViewModel @Inject constructor(
 
     private val loadAnnouncementsResult = MutableLiveData<Result<List<Announcement>>>()
 
-    private val loadLinksResult = MutableLiveData<Result<List<Link>>>()
+    private val loadLinksResult by lazy(LazyThreadSafetyMode.NONE) {
+        observeLinksUseCase.observe()
+    }
 
     init {
         loadAnnouncementsUseCase(Unit, loadAnnouncementsResult)
@@ -55,8 +59,6 @@ class FeedViewModel @Inject constructor(
                 it.successOr(emptyList())
             }
         }
-
-        loadLinksUseCase(Unit, loadLinksResult)
 
         val links = loadLinksResult.map {
             if (it is Loading) {
@@ -103,6 +105,11 @@ class FeedViewModel @Inject constructor(
         searchVisible = loadLinksResult.map {
             Event(content = (it as? Result.Success)?.data?.isNotEmpty() ?: false)
         }
+
+        // Observe updates for links
+        observeLinksUseCase.execute(Unit)
+
+        fetchLinks(0)
     }
 
     override fun click(link: Link) {
@@ -111,5 +118,9 @@ class FeedViewModel @Inject constructor(
 
     override fun longClick(link: Link) {
         performLinkLongClickEvent.postValue(Event(link))
+    }
+
+    fun fetchLinks(page: Int) {
+        fetchLinksUseCase(page)
     }
 }
