@@ -38,21 +38,21 @@ class DataModule {
         return DefaultAnnouncementDataSource()
     }
 
-//    @Singleton
-//    @Provides
-//    fun provideRemoteDataSource(
-//        context: Context,
-//        gson: Gson,
-//        networkUtils: NetworkUtils
-//    ): LinkDataSource {
-//        return RemoteLinkDataSource(context, gson, networkUtils)
-//    }
-
     @Singleton
     @Provides
-    fun provideFakeDataSource(): LinkDataSource {
-        return FakeLinkDataSource()
+    fun provideRemoteDataSource(
+        context: Context,
+        gson: Gson,
+        networkUtils: NetworkUtils
+    ): LinkDataSource {
+        return RemoteLinkDataSource(context, gson, networkUtils)
     }
+
+//    @Singleton
+//    @Provides
+//    fun provideFakeDataSource(): LinkDataSource {
+//        return FakeLinkDataSource()
+//    }
 
     @Singleton
     @Provides
