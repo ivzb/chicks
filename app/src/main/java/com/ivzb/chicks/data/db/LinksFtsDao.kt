@@ -9,13 +9,13 @@ import androidx.room.*
 @Dao
 interface LinksFtsDao {
 
-    @Query("SELECT url, title, imageUrl, timestamp FROM linkFts WHERE url = :url")
+    @Query("SELECT rowid, url, title, imageUrl, timestamp FROM linkFts WHERE url = :url")
     fun get(url: String): LinkFtsEntity
 
-    @Query("SELECT url, title, imageUrl, timestamp FROM linkFts ORDER BY timestamp DESC")
+    @Query("SELECT rowid, url, title, imageUrl, timestamp FROM linkFts ORDER BY timestamp DESC")
     fun getAll(): List<LinkFtsEntity>
 
-    @Query("SELECT url, title, imageUrl, timestamp FROM linkFts ORDER BY timestamp DESC")
+    @Query("SELECT rowid, url, title, imageUrl, timestamp FROM linkFts ORDER BY timestamp DESC")
     fun observeAll(): LiveData<List<LinkFtsEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

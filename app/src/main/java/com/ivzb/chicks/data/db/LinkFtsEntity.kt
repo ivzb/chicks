@@ -15,6 +15,10 @@ import androidx.room.PrimaryKey
 @Fts4
 data class LinkFtsEntity(
 
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "rowid")
+    val id: Long,
+
     @ColumnInfo(name = "url")
     val url: String,
 
@@ -34,6 +38,7 @@ data class LinkFtsEntity(
 
         other as LinkFtsEntity
 
+        if (id != other.id) return false
         if (url != other.url) return false
         if (title != other.title) return false
         if (imageUrl != other.imageUrl) return false
@@ -43,7 +48,8 @@ data class LinkFtsEntity(
     }
 
     override fun hashCode(): Int {
-        var result = url.hashCode()
+        var result = id.hashCode()
+        result = 31 * result + url.hashCode()
         result = 31 * result + (title?.hashCode() ?: 0)
         result = 31 * result + (imageUrl?.hashCode() ?: 0)
         result = 31 * result + (timestamp?.hashCode() ?: 0)

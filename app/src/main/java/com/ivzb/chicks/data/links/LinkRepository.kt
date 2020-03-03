@@ -30,6 +30,7 @@ open class LinkRepository @Inject constructor(
             .toSet()
             .map {
                 Link(
+                    id = it.id,
                     url = it.url,
                     title = it.title,
                     imageUrl = it.imageUrl,
@@ -46,6 +47,7 @@ open class LinkRepository @Inject constructor(
                 .toSet()
                 .map {
                     Link(
+                        id = it.id,
                         url = it.url,
                         title = it.title,
                         imageUrl = it.imageUrl,
@@ -58,6 +60,7 @@ open class LinkRepository @Inject constructor(
     open fun populateLinks(links: List<Link>) {
         val linkFtsEntities = links.map { link ->
             LinkFtsEntity(
+                id = link.id,
                 url = link.url,
                 title = link.title,
                 imageUrl = link.imageUrl,

@@ -37,6 +37,7 @@ class SearchViewModel @Inject constructor(
                         val link = searched.link
 
                         SearchResult(
+                            id = link.id,
                             url = link.url,
                             title = link.title,
                             imageUrl = link.imageUrl,
@@ -61,6 +62,7 @@ class SearchViewModel @Inject constructor(
                 performLinkClickEvent.postValue(
                     Event(
                         Link(
+                            id = searchResult.id,
                             url = searchResult.url,
                             title = searchResult.title,
                             imageUrl = searchResult.imageUrl,
@@ -78,6 +80,7 @@ class SearchViewModel @Inject constructor(
                 performLinkLongClickEvent.postValue(
                     Event(
                         Link(
+                            id = searchResult.id,
                             url = searchResult.url,
                             title = searchResult.title,
                             imageUrl = searchResult.imageUrl,

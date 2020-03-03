@@ -1,6 +1,7 @@
 package com.ivzb.chicks.model
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -9,8 +10,19 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class Link(
+
+    @SerializedName("id")
+    val id: Long,
+
+    @SerializedName("url")
     val url: String,
+
+    @SerializedName("title")
     val title: String? = null,
+
+    @SerializedName("image_url")
     val imageUrl: String? = null,
+
+    @SerializedName("timestamp")
     val timestamp: Long? = 0
 ) : Parcelable
