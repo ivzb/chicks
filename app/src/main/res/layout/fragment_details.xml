@@ -71,6 +71,16 @@
             app:elevation="6dp"
             app:fabAlignmentMode="end" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_normal"
+            app:hoveredFocusedTranslationZ="0dp"
+            app:layout_anchor="@id/details_bottom_app_bar"
+            app:pressedTranslationZ="0dp"
+            app:srcCompat="@drawable/ic_download" />
+
         <View
             android:id="@+id/nav_bar_scrim"
             android:layout_width="match_parent"

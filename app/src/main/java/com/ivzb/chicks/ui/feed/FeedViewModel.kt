@@ -67,7 +67,7 @@ class FeedViewModel @Inject constructor(
                 listOf(LoadingIndicator)
             } else {
                 val items = it.successOr(emptyList())
-                if (items.isNotEmpty()) items else listOf(LinkEmpty)
+                if (items.isNotEmpty()) items else listOf(LoadingIndicator)
             }
         }
 
@@ -76,12 +76,13 @@ class FeedViewModel @Inject constructor(
 
             val feedItems = mutableListOf<Any>()
 
-            if (announcementItems.isNotEmpty() && !(linkItems[0] is Link)) {
+            if (announcementItems.isNotEmpty() && !(linkItems[0] is Link) && !(linkItems[0] is LoadingIndicator)) {
 //                feedItems.add(SectionHeader(R.string.feed_announcements_title))
                 feedItems.addAll(announcementItems)
             }
 
-            feedItems.plus(SectionHeader(R.string.feed_links_title))
+            feedItems
+                //.plus(SectionHeader(R.string.feed_links_title))
                 .plus(linkItems)
 
         }

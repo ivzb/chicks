@@ -26,11 +26,11 @@ data class SearchResult(
     }
 
     override fun hashCode(): Int {
-        var result = id.hashCode()
+        var result = id.toString().hashCode()
         result = 31 * result + url.hashCode()
         result = 31 * result + (title?.hashCode() ?: 0)
         result = 31 * result + (imageUrl?.hashCode() ?: 0)
-        result = 31 * result + (timestamp?.hashCode() ?: 0)
+        result = 31 * result + (timestamp?.toString().hashCode() ?: 0)
         result = 31 * result + type.hashCode()
         return result
     }
