@@ -45,6 +45,8 @@ class FeedViewModel @Inject constructor(
 
     private val loadAnnouncementsResult = MutableLiveData<Result<List<Announcement>>>()
 
+    val swipeRefreshing: LiveData<Boolean>
+
     private val loadLinksResult by lazy(LazyThreadSafetyMode.NONE) {
         observeLinksUseCase.observe()
     }
@@ -82,6 +84,11 @@ class FeedViewModel @Inject constructor(
             feedItems.plus(SectionHeader(R.string.feed_links_title))
                 .plus(linkItems)
 
+        }
+
+        swipeRefreshing = loadLinksResult.map {
+            // Whenever refresh finishes, stop the indicator, whatever the result it
+            false
         }
 
         errorMessage = loadLinksResult.map {
@@ -122,5 +129,9 @@ class FeedViewModel @Inject constructor(
 
     fun fetchLinks(page: Int) {
         fetchLinksUseCase(page)
+    }
+
+    fun onSwipeRefresh() {
+        fetchLinksUseCase(0)
     }
 }
