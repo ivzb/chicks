@@ -27,9 +27,9 @@ android {
 
         release {
 //            signingConfig debug.signingConfig
-            shrinkResources true
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//            shrinkResources true
+            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             buildConfigField "String", "LINK_DATA_URL", "\"https://candleticks.com/feed\""
         }
