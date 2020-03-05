@@ -68,6 +68,7 @@
             android:visibility="gone"
             app:goneUnless="@{viewModel.link.imageUrl != null}"
             app:imageUrl="@{viewModel.link.imageUrl}"
+            app:isNSFW="@{viewModel.link.isNSFW}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

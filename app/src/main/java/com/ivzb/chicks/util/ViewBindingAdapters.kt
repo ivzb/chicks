@@ -19,10 +19,12 @@ import androidx.databinding.BindingAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ivzb.chicks.R
 import com.ivzb.chicks.model.Theme
 import com.ivzb.chicks.widget.CustomSwipeRefreshLayout
+import jp.wasabeef.glide.transformations.BlurTransformation
 
 @BindingAdapter("goneUnless")
 fun goneUnless(view: View, visible: Boolean) {
@@ -39,25 +41,8 @@ fun pageMargin(viewPager: ViewPager, pageMargin: Float) {
     viewPager.pageMargin = pageMargin.toInt()
 }
 
-@BindingAdapter(value = [
-    "momentImageUrl",
-    "momentImageUrlDarkTheme",
-    "momentTheme"],
-    requireAll = false)
-fun momentImageUrl(
-    imageView: ImageView,
-    momentImageUrl: String?,
-    momentImageUrlDarkTheme: String?,
-    momentTheme: Theme?
-) {
-    when (momentTheme) {
-        Theme.DARK -> imageUri(imageView, momentImageUrlDarkTheme?.toUri(), null)
-        else -> imageUri(imageView, momentImageUrl?.toUri(), null)
-    }
-}
-
-@BindingAdapter(value = ["imageUri", "placeholder"], requireAll = false)
-fun imageUri(imageView: ImageView, imageUri: Uri?, placeholder: Drawable?) {
+@BindingAdapter(value = ["imageUri", "placeholder", "isNSFW"], requireAll = false)
+fun imageUri(imageView: ImageView, imageUri: Uri?, placeholder: Drawable?, isNSFW: Boolean) {
     when (imageUri) {
         null -> {
             Glide.with(imageView)
@@ -67,15 +52,22 @@ fun imageUri(imageView: ImageView, imageUri: Uri?, placeholder: Drawable?) {
         else -> {
             Glide.with(imageView)
                 .load(imageUri)
+                .apply(
+                    if (isNSFW) {
+                        bitmapTransform(BlurTransformation(25, 3))
+                    } else {
+                        RequestOptions()
+                    }
+                )
                 .apply(RequestOptions().placeholder(placeholder))
                 .into(imageView)
         }
     }
 }
 
-@BindingAdapter(value = ["imageUrl", "placeholder"], requireAll = false)
-fun imageUrl(imageView: ImageView, imageUrl: String?, placeholder: Drawable?) {
-    imageUri(imageView, imageUrl?.toUri(), placeholder)
+@BindingAdapter(value = ["imageUrl", "placeholder", "isNSFW"], requireAll = false)
+fun imageUrl(imageView: ImageView, imageUrl: String?, placeholder: Drawable?, isNSFW: Boolean) {
+    imageUri(imageView, imageUrl?.toUri(), placeholder, isNSFW)
 }
 
 /**

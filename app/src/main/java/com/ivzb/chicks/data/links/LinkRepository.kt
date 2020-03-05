@@ -34,7 +34,8 @@ open class LinkRepository @Inject constructor(
                     url = it.url,
                     title = it.title,
                     imageUrl = it.imageUrl,
-                    timestamp = it.timestamp
+                    timestamp = it.timestamp,
+                    isNSFW = it.isNSFW
                 )
             }
     }
@@ -51,7 +52,8 @@ open class LinkRepository @Inject constructor(
                         url = it.url,
                         title = it.title,
                         imageUrl = it.imageUrl,
-                        timestamp = it.timestamp
+                        timestamp = it.timestamp,
+                        isNSFW = it.isNSFW
                     )
                 }
         }
@@ -64,7 +66,8 @@ open class LinkRepository @Inject constructor(
                 url = link.url,
                 title = link.title,
                 imageUrl = link.imageUrl,
-                timestamp = link.timestamp
+                timestamp = link.timestamp,
+                isNSFW = link.isNSFW
             )
         }
 

@@ -6,6 +6,7 @@ data class SearchResult(
     val title: String?,
     val imageUrl: String?,
     val timestamp: Long?,
+    val isNSFW: Boolean,
     val type: SearchResultType
 ) {
 
@@ -20,6 +21,7 @@ data class SearchResult(
         if (title != other.title) return false
         if (imageUrl != other.imageUrl) return false
         if (timestamp != other.timestamp) return false
+        if (isNSFW != other.isNSFW) return false
         if (type != other.type) return false
 
         return true
@@ -30,7 +32,8 @@ data class SearchResult(
         result = 31 * result + url.hashCode()
         result = 31 * result + (title?.hashCode() ?: 0)
         result = 31 * result + (imageUrl?.hashCode() ?: 0)
-        result = 31 * result + (timestamp?.toString().hashCode() ?: 0)
+        result = 31 * result + (timestamp?.toString().hashCode())
+        result = 31 * result + isNSFW.hashCode()
         result = 31 * result + type.hashCode()
         return result
     }

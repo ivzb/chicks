@@ -29,7 +29,10 @@ data class LinkFtsEntity(
     val imageUrl: String? = null,
 
     @ColumnInfo(name = "timestamp")
-    val timestamp: Long? = 0
+    val timestamp: Long? = 0,
+
+    @ColumnInfo(name = "is_nsfw")
+    val isNSFW: Boolean
 ) {
 
     override fun equals(other: Any?): Boolean {
@@ -43,6 +46,7 @@ data class LinkFtsEntity(
         if (title != other.title) return false
         if (imageUrl != other.imageUrl) return false
         if (timestamp != other.timestamp) return false
+        if (isNSFW != other.isNSFW) return false
 
         return true
     }
@@ -53,6 +57,7 @@ data class LinkFtsEntity(
         result = 31 * result + (title?.hashCode() ?: 0)
         result = 31 * result + (imageUrl?.hashCode() ?: 0)
         result = 31 * result + (timestamp?.toString().hashCode() ?: 0)
+        result = 31 * result + isNSFW.hashCode()
         return result
     }
 }

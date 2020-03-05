@@ -110,9 +110,6 @@ class FeedFragment : MainNavigationFragment() {
         model.performLinkLongClickEvent.observe(viewLifecycleOwner, EventObserver { link ->
             openLinkOptionsDialog(link)
         })
-
-        val clipboard =
-            requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     }
 
     private fun showFeedItems(recyclerView: RecyclerView, list: List<Any>?) {

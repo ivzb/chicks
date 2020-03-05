@@ -42,6 +42,7 @@ class SearchViewModel @Inject constructor(
                             title = link.title,
                             imageUrl = link.imageUrl,
                             timestamp = link.timestamp,
+                            isNSFW = link.isNSFW,
                             type = SearchResultType.LINK
                         )
                     }
@@ -66,7 +67,8 @@ class SearchViewModel @Inject constructor(
                             url = searchResult.url,
                             title = searchResult.title,
                             imageUrl = searchResult.imageUrl,
-                            timestamp = searchResult.timestamp
+                            timestamp = searchResult.timestamp,
+                            isNSFW = searchResult.isNSFW
                         )
                     )
                 )
@@ -84,7 +86,8 @@ class SearchViewModel @Inject constructor(
                             url = searchResult.url,
                             title = searchResult.title,
                             imageUrl = searchResult.imageUrl,
-                            timestamp = searchResult.timestamp
+                            timestamp = searchResult.timestamp,
+                            isNSFW = searchResult.isNSFW
                         )
                     )
                 )
