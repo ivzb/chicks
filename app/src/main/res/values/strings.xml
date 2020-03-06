@@ -27,6 +27,7 @@
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>
+    <string name="settings_enable_nsfw">I\'m over 18 years old (Show NSFW)</string>
     <string name="settings_theme_title">Choose theme</string>
     <string name="settings_theme_system">System default</string>
     <string name="settings_theme_light">Light</string>

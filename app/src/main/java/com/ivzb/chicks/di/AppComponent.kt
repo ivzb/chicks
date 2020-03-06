@@ -1,6 +1,7 @@
 package com.ivzb.chicks.di
 
 import com.ivzb.chicks.MainApplication
+import com.ivzb.chicks.ui.nsfw.NSFWActivityDelegateModule
 import com.ivzb.chicks.ui.theme.ThemedActivityDelegateModule
 import dagger.BindsInstance
 import dagger.Component
@@ -23,6 +24,7 @@ import javax.inject.Singleton
         ActivityBindingModule::class,
         ViewModelModule::class,
         DataModule::class,
+        NSFWActivityDelegateModule::class,
         ThemedActivityDelegateModule::class
     ]
 )

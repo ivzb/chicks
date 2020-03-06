@@ -8,6 +8,10 @@
         <import type="androidx.lifecycle.LiveData" />
 
         <variable
+            name="nsfwDelegate"
+            type="com.ivzb.chicks.ui.nsfw.NSFWActivityDelegate" />
+
+        <variable
             name="link"
             type="com.ivzb.chicks.model.Link" />
 
@@ -37,7 +41,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@null"
                 android:scaleType="fitXY"
-                app:isNSFW="@{link.NSFW}"
+                app:isNSFW="@{!nsfwDelegate.isNSFW() &amp;&amp; link.NSFW}"
                 app:imageUrl="@{link.imageUrl}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

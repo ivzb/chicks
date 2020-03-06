@@ -8,6 +8,8 @@ import com.ivzb.chicks.model.Theme
 import com.ivzb.chicks.util.map
 import com.ivzb.chicks.domain.Result
 import com.ivzb.chicks.domain.Result.Success
+import com.ivzb.chicks.domain.settings.GetNSFWUseCase
+import com.ivzb.chicks.domain.settings.SaveNSFWUseCase
 import com.ivzb.chicks.domain.settings.GetAvailableThemesUseCase
 import com.ivzb.chicks.domain.settings.GetThemeUseCase
 import com.ivzb.chicks.domain.settings.SetThemeUseCase
@@ -15,6 +17,8 @@ import javax.inject.Inject
 
 class SettingsViewModel @Inject constructor(
     val setThemeUseCase: SetThemeUseCase,
+    getNSFWUseCase: GetNSFWUseCase,
+    val saveNSFWUseCase: SaveNSFWUseCase,
     getThemeUseCase: GetThemeUseCase,
     getAvailableThemesUseCase: GetAvailableThemesUseCase
 ) : ViewModel() {
@@ -31,7 +35,16 @@ class SettingsViewModel @Inject constructor(
     val navigateToThemeSelector: LiveData<Event<Unit>>
         get() = _navigateToThemeSelector
 
+    // NSFW setting
+    private val enableNSFWResult = MutableLiveData<Result<Boolean>>()
+    val enableNSFW: LiveData<Boolean>
+
     init {
+        getNSFWUseCase(Unit, enableNSFWResult)
+        enableNSFW = enableNSFWResult.map {
+            (it as? Success<Boolean>)?.data ?: false
+        }
+
         getThemeUseCase(Unit, themeResult)
         theme = themeResult.map {
             (it as? Success<Theme>)?.data ?: Theme.SYSTEM
@@ -41,6 +54,10 @@ class SettingsViewModel @Inject constructor(
         availableThemes = availableThemesResult.map {
             (it as? Success<List<Theme>>)?.data ?: emptyList()
         }
+    }
+
+    fun toggleEnableNSFW(checked: Boolean) {
+        saveNSFWUseCase(checked, enableNSFWResult)
     }
 
     fun setTheme(theme: Theme) {

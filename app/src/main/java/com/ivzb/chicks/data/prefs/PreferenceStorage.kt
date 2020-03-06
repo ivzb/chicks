@@ -21,6 +21,8 @@ interface PreferenceStorage {
     var onboardingCompleted: Boolean
     var snackbarIsStopped: Boolean
     var observableSnackbarIsStopped: LiveData<Boolean>
+    var isNSFWEnabled: Boolean
+    var observableNSFW: LiveData<Boolean>
     var selectedTheme: String?
     var observableSelectedTheme: LiveData<String>
 }
@@ -41,10 +43,13 @@ class SharedPreferenceStorage @Inject constructor(context: Context) : Preference
 
     private val observableShowSnackbarResult = MutableLiveData<Boolean>()
 
+    private val observableNSFWResult = MutableLiveData<Boolean>()
+
     private val observableSelectedThemeResult = MutableLiveData<String>()
 
     private val changeListener = OnSharedPreferenceChangeListener { _, key ->
         when (key) {
+            PREF_IS_NSFW_ENABLED -> observableNSFWResult.value = isNSFWEnabled
             PREF_DARK_MODE_ENABLED -> observableSelectedThemeResult.value = selectedTheme
         }
     }
@@ -57,6 +62,16 @@ class SharedPreferenceStorage @Inject constructor(context: Context) : Preference
         get() {
             observableShowSnackbarResult.value = snackbarIsStopped
             return observableShowSnackbarResult
+        }
+        set(_) = throw IllegalAccessException("This property can't be changed")
+
+    override var isNSFWEnabled
+            by BooleanPreference(prefs, PREF_IS_NSFW_ENABLED, false)
+
+    override var observableNSFW: LiveData<Boolean>
+        get() {
+            observableNSFWResult.value = isNSFWEnabled
+            return observableNSFWResult
         }
         set(_) = throw IllegalAccessException("This property can't be changed")
 
@@ -75,6 +90,7 @@ class SharedPreferenceStorage @Inject constructor(context: Context) : Preference
         const val PREFS_NAME = "chicks"
         const val PREF_ONBOARDING = "pref_onboarding"
         const val PREF_SNACKBAR_IS_STOPPED = "pref_snackbar_is_stopped"
+        const val PREF_IS_NSFW_ENABLED = "pref_is_nsfw_enabled"
         const val PREF_DARK_MODE_ENABLED = "pref_dark_mode"
     }
 

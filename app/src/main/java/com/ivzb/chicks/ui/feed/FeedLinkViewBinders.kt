@@ -44,6 +44,7 @@ class LinkViewHolder(
 
     fun bind(link: Link) {
         binding.link = link
+        binding.nsfwDelegate = feedViewModel.nsfwActivityDelegate
         binding.lifecycleOwner = lifecycleOwner
         binding.executePendingBindings()
 

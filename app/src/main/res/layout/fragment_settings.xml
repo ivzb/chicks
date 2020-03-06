@@ -52,6 +52,15 @@
                 android:paddingBottom="@dimen/margin_normal"
                 tools:targetApi="o">
 
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/settings_enable_notifications"
+                    style="@style/Widget.Chicks.Settings.Switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="@{viewModel.enableNSFW}"
+                    android:onCheckedChanged="@{(view, checked) -> viewModel.toggleEnableNSFW(checked)}"
+                    android:text="@string/settings_enable_nsfw" />
+
                 <TextView
                     android:id="@+id/settings_choose_theme"
                     style="@style/Widget.Chicks.Settings.Button"

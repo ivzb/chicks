@@ -14,7 +14,7 @@ import com.ivzb.chicks.domain.links.ObserveLinksUseCase
 import com.ivzb.chicks.domain.successOr
 import com.ivzb.chicks.model.Announcement
 import com.ivzb.chicks.model.Link
-import com.ivzb.chicks.ui.SectionHeader
+import com.ivzb.chicks.ui.nsfw.NSFWActivityDelegate
 import com.ivzb.chicks.util.SnackbarMessage
 import com.ivzb.chicks.util.combine
 import com.ivzb.chicks.util.map
@@ -28,7 +28,8 @@ import javax.inject.Inject
 class FeedViewModel @Inject constructor(
     loadAnnouncementsUseCase: LoadAnnouncementsUseCase,
     private val observeLinksUseCase: ObserveLinksUseCase,
-    private val fetchLinksUseCase: FetchLinksUseCase
+    private val fetchLinksUseCase: FetchLinksUseCase,
+    val nsfwActivityDelegate: NSFWActivityDelegate
 ) : ViewModel(), EventActions {
 
     val feed: LiveData<List<Any>>
