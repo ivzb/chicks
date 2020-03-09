@@ -74,14 +74,14 @@ class DetailsFragment : MainNavigationFragment() {
                 when (item.itemId) {
                     R.id.menu_item_copy -> {
                         detailsViewModel.link.value?.apply {
-                            copy(requireActivity(), title ?: "Link you copied", url)
+                            copy(requireActivity(), imageUrl)
                             analyticsHelper.logUiEvent(AnalyticsActions.LINK_COPY)
                         }
                     }
 
                     R.id.menu_item_share -> {
                         detailsViewModel.link.value?.apply {
-                            share(requireActivity(), url)
+                            share(requireActivity(), imageUrl)
                             analyticsHelper.logUiEvent(AnalyticsActions.LINK_SHARE)
                         }
                     }

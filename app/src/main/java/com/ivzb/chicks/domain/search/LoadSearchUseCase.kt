@@ -20,8 +20,7 @@ class LoadSearchUseCase @Inject constructor(
             .toSet()
             .filter { link ->
                 query.isEmpty() ||
-                        link.title?.toLowerCase()?.contains(query) ?: false ||
-                        link.url.toLowerCase().contains(query)
+                        link.username?.toLowerCase()?.contains(query) ?: false
             }
             .map { Searchable.SearchedLink(it) }
     }

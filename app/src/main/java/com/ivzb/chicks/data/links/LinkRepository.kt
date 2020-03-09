@@ -31,11 +31,9 @@ open class LinkRepository @Inject constructor(
             .map {
                 Link(
                     id = it.id,
-                    url = it.url,
-                    title = it.title,
                     imageUrl = it.imageUrl,
-                    timestamp = it.timestamp,
-                    isNSFW = it.isNSFW
+                    isNSFW = it.isNSFW,
+                    username = it.username
                 )
             }
     }
@@ -49,11 +47,9 @@ open class LinkRepository @Inject constructor(
                 .map {
                     Link(
                         id = it.id,
-                        url = it.url,
-                        title = it.title,
                         imageUrl = it.imageUrl,
-                        timestamp = it.timestamp,
-                        isNSFW = it.isNSFW
+                        isNSFW = it.isNSFW,
+                        username = it.username
                     )
                 }
         }
@@ -63,11 +59,9 @@ open class LinkRepository @Inject constructor(
         val linkFtsEntities = links.map { link ->
             LinkFtsEntity(
                 id = link.id,
-                url = link.url,
-                title = link.title,
                 imageUrl = link.imageUrl,
-                timestamp = link.timestamp,
-                isNSFW = link.isNSFW
+                isNSFW = link.isNSFW,
+                username = link.username
             )
         }
 

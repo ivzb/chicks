@@ -25,9 +25,9 @@ fun navigationItemBackground(context: Context): Drawable? {
     return background
 }
 
-fun copy(activity: Activity, title: String, url: String) {
+fun copy(activity: Activity, url: String) {
     val clipboard = activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    val clip: ClipData = ClipData.newPlainText(title, url)
+    val clip: ClipData = ClipData.newPlainText("Chicks image", url)
     clipboard.setPrimaryClip(clip)
 
     Toast.makeText(activity, "Link copied.", Toast.LENGTH_LONG).show()

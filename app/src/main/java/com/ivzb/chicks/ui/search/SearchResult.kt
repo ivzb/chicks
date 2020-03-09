@@ -2,11 +2,9 @@ package com.ivzb.chicks.ui.search
 
 data class SearchResult(
     val id: Long,
-    val url: String,
-    val title: String?,
-    val imageUrl: String?,
-    val timestamp: Long?,
+    val imageUrl: String,
     val isNSFW: Boolean,
+    val username: String?,
     val type: SearchResultType
 ) {
 
@@ -17,11 +15,9 @@ data class SearchResult(
         other as SearchResult
 
         if (id != other.id) return false
-        if (url != other.url) return false
-        if (title != other.title) return false
         if (imageUrl != other.imageUrl) return false
-        if (timestamp != other.timestamp) return false
         if (isNSFW != other.isNSFW) return false
+        if (username != other.username) return false
         if (type != other.type) return false
 
         return true
@@ -29,11 +25,9 @@ data class SearchResult(
 
     override fun hashCode(): Int {
         var result = id.toString().hashCode()
-        result = 31 * result + url.hashCode()
-        result = 31 * result + (title?.hashCode() ?: 0)
-        result = 31 * result + (imageUrl?.hashCode() ?: 0)
-        result = 31 * result + (timestamp?.toString().hashCode())
+        result = 31 * result + imageUrl.hashCode()
         result = 31 * result + isNSFW.hashCode()
+        result = 31 * result + (username?.hashCode() ?: 0)
         result = 31 * result + type.hashCode()
         return result
     }

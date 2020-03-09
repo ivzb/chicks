@@ -19,20 +19,14 @@ data class LinkFtsEntity(
     @ColumnInfo(name = "rowid")
     val id: Long,
 
-    @ColumnInfo(name = "url")
-    val url: String,
-
-    @ColumnInfo(name = "title")
-    val title: String? = null,
-
     @ColumnInfo(name = "imageUrl")
-    val imageUrl: String? = null,
-
-    @ColumnInfo(name = "timestamp")
-    val timestamp: Long? = 0,
+    val imageUrl: String,
 
     @ColumnInfo(name = "is_nsfw")
-    val isNSFW: Boolean
+    val isNSFW: Boolean,
+
+    @ColumnInfo(name = "username")
+    val username: String? = null
 ) {
 
     override fun equals(other: Any?): Boolean {
@@ -42,22 +36,18 @@ data class LinkFtsEntity(
         other as LinkFtsEntity
 
         if (id != other.id) return false
-        if (url != other.url) return false
-        if (title != other.title) return false
         if (imageUrl != other.imageUrl) return false
-        if (timestamp != other.timestamp) return false
         if (isNSFW != other.isNSFW) return false
+        if (username != other.username) return false
 
         return true
     }
 
     override fun hashCode(): Int {
         var result = id.toString().hashCode()
-        result = 31 * result + url.hashCode()
-        result = 31 * result + (title?.hashCode() ?: 0)
-        result = 31 * result + (imageUrl?.hashCode() ?: 0)
-        result = 31 * result + (timestamp?.toString().hashCode() ?: 0)
+        result = 31 * result + imageUrl.hashCode()
         result = 31 * result + isNSFW.hashCode()
+        result = 31 * result + (username?.hashCode() ?: 0)
         return result
     }
 }

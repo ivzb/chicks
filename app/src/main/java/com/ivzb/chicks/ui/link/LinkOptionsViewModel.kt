@@ -7,7 +7,7 @@ import com.ivzb.chicks.model.Link
 import javax.inject.Inject
 
 enum class LinkOptionsEvent {
-    Copy, Share, Visit
+    Copy, Share
 }
 
 /**
@@ -21,10 +21,6 @@ class LinkOptionsViewModel @Inject constructor() : ViewModel() {
 
     fun setLink(value: Link) {
         link.value = value
-    }
-
-    fun visit() {
-        performLinkOptionEvent.postValue(Event(LinkOptionsEvent.Visit))
     }
 
     fun copy() {

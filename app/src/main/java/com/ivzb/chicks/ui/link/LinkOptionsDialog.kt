@@ -71,7 +71,6 @@ class LinkOptionsDialogFragment : DaggerAppCompatDialogFragment() {
             when (request) {
                 LinkOptionsEvent.Copy -> copy(link)
                 LinkOptionsEvent.Share -> share(link)
-                LinkOptionsEvent.Visit -> visit()
             }
 
             dismiss()
@@ -88,17 +87,13 @@ class LinkOptionsDialogFragment : DaggerAppCompatDialogFragment() {
     }
 
     private fun copy(link: Link) {
-        copy(requireActivity(), link.title ?: "Link you copied", link.url)
+        copy(requireActivity(), link.imageUrl)
         analyticsHelper.logUiEvent(AnalyticsActions.LINK_COPY)
     }
 
     private fun share(link: Link) {
-        share(requireActivity(), link.url)
+        share(requireActivity(), link.imageUrl)
         analyticsHelper.logUiEvent(AnalyticsActions.LINK_SHARE)
-    }
-
-    private fun visit() {
-        analyticsHelper.logUiEvent(AnalyticsActions.LINK_VISIT)
     }
 
     companion object {

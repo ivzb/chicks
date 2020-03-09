@@ -17,7 +17,6 @@ object AnalyticsActions {
 
     const val LINK_COPY = "link_copy"
     const val LINK_SHARE = "link_share"
-    const val LINK_VISIT = "link_visit"
 
     const val HOME_TO_DETAILS = "home_to_details"
     const val HOME_TO_OPTIONS = "home_to_options"
