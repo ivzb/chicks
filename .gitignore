@@ -12,7 +12,8 @@
 /captures
 .externalNativeBuild
 .cxx
-
 .idea/
+
 app/release/
 chicks.jks
+google-services.json
